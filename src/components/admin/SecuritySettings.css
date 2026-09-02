@@ -1,0 +1,342 @@
+/* ==============================================================================
+   AYDARA LUXURY MAISON — SECURITY & AUDIT TRAIL STYLES (LIGHT / DARK HARMONY)
+   ============================================================================== */
+
+.security-settings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.security-grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 24px;
+}
+
+.security-card,
+.audit-trail-section {
+  background: #FFFFFF;
+  border: 1px solid #EBE4EC;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(36, 17, 47, 0.04);
+}
+
+.card-head-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #F1ECF3;
+}
+
+.password-update-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sec-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sec-input-group label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #4A3E4E;
+}
+
+.sec-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sec-input-wrap input {
+  width: 100%;
+  background: #FAF8FB;
+  border: 1px solid #D8CFDC;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--color-purple-primary, #24112F);
+  font-size: 0.85rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.sec-input-wrap input:focus {
+  border-color: var(--color-gold, #C8A96B);
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(200, 169, 107, 0.15);
+}
+
+.sec-pass-toggle {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: #8C8390;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.sec-pass-toggle:hover {
+  color: var(--color-purple-primary, #24112F);
+}
+
+.update-password-btn {
+  background: var(--color-gold, #C8A96B);
+  color: #180B20;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 6px;
+}
+
+.update-password-btn:hover {
+  background: #D4B87C;
+  transform: translateY(-1px);
+}
+
+.update-password-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Session Details */
+.session-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.session-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #F3EEF5;
+}
+
+.detail-label {
+  font-size: 0.82rem;
+  color: #6B7280;
+}
+
+.detail-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-purple-primary, #24112F);
+}
+
+.detail-value.role-pill {
+  background: rgba(200, 169, 107, 0.18);
+  border: 1px solid rgba(200, 169, 107, 0.4);
+  color: #926E2B;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.detail-value.status-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #15803D;
+  background: #DCFCE7;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.session-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.goto-staff-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #FAF5FC;
+  border: 1px solid #E2D1E7;
+  color: var(--color-purple-primary, #24112F);
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.goto-staff-btn:hover {
+  background: rgba(200, 169, 107, 0.15);
+  border-color: var(--color-gold, #C8A96B);
+}
+
+.security-logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  color: #B91C1C;
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.security-logout-btn:hover {
+  background: #FEE2E2;
+}
+
+/* Audit Table */
+.audit-table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #C8A96B #F1EAF4;
+  padding-bottom: 6px;
+}
+
+.audit-table-responsive::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.audit-table-responsive::-webkit-scrollbar-track {
+  background: #F1EAF4;
+  border-radius: 4px;
+}
+
+.audit-table-responsive::-webkit-scrollbar-thumb {
+  background: #C8A96B;
+  border-radius: 4px;
+}
+
+.audit-table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #A68748;
+}
+
+.audit-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.audit-table th {
+  padding: 12px 16px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6B7280;
+  background: #FAF8FB;
+  border-bottom: 1px solid #EBE4EC;
+}
+
+.audit-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #F3EEF5;
+  font-size: 0.82rem;
+  color: var(--color-purple-primary, #24112F);
+}
+
+.audit-time {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  color: #6B7280;
+  white-space: nowrap;
+}
+
+.event-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  background: #F5EEF8;
+  color: var(--color-purple-primary, #24112F);
+  white-space: nowrap;
+}
+
+.actor-email {
+  font-weight: 600;
+  color: var(--color-purple-primary, #24112F);
+}
+
+.target-res {
+  color: #926E2B;
+  font-weight: 500;
+}
+
+.details-json {
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: #6B7280;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.audit-empty-state {
+  padding: 50px 20px;
+  text-align: center;
+  color: #6B7280;
+}
+
+.security-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.security-alert.success {
+  background: #DCFCE7;
+  border: 1px solid #86EFAC;
+  color: #15803D;
+}
+
+.security-alert.error {
+  background: #FEE2E2;
+  border: 1px solid #FCA5A5;
+  color: #B91C1C;
+}
+
+@media (max-width: 768px) {
+  .security-grid-layout {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,202 @@
+:root {
+  /* AYDARA Official Color System */
+  --color-purple-primary: #24112F;
+  --color-purple-secondary: #3A1D4A;
+  --color-purple-dark: #1A0B22;
+  --color-purple-light: #4A285E;
+  
+  --color-white: #FFFFFF;
+  --color-offwhite: #F8F5F8;
+  --color-sand: #F3EFE9;
+  --color-cream: #FAF8F5;
+  
+  --color-text-primary: #111111;
+  --color-text-secondary: #5E5861;
+  --color-text-muted: #8E8893;
+  --color-text-light: #FFFFFF;
+  --color-text-gold: #C8A96B;
+
+  --color-gold: #C8A96B;
+  --color-gold-light: #DFCA99;
+  --color-gold-dark: #9F7E3B;
+  --gradient-gold: linear-gradient(135deg, #DFCA99 0%, #C8A96B 50%, #B28F4D 100%);
+  
+  /* Typography */
+  --font-serif: "SUSE Mono", sans-serif;
+  --font-sans: "SUSE Mono", sans-serif;
+  --font-mono: "SUSE Mono", monospace, sans-serif;
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+  --space-5xl: 128px;
+  
+  /* Shadows (Subtle, luxury depth without visible borders) */
+  --shadow-subtle: 0 4px 20px rgba(36, 17, 47, 0.04);
+  --shadow-elevated: 0 10px 40px rgba(36, 17, 47, 0.08);
+  --shadow-luxury: 0 20px 60px rgba(36, 17, 47, 0.12);
+  --shadow-drawer: -10px 0 50px rgba(26, 11, 34, 0.25);
+  
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-medium: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Strict Zero-Border Mandate & Global Font Family */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none !important;
+  outline: none;
+  font-family: "SUSE Mono", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  font-family: "SUSE Mono", sans-serif;
+  background-color: var(--color-white);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* Accessible focus styling without visible borders (Subtle gold glow/offset) */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-gold) !important;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  font-family: "SUSE Mono", sans-serif;
+  transition: opacity var(--transition-fast), color var(--transition-fast);
+}
+
+button, input, select, textarea, label {
+  background: none;
+  cursor: pointer;
+  font-family: "SUSE Mono", sans-serif;
+}
+
+/* Editorial Typography Classes */
+.editorial-title {
+  font-family: "SUSE Mono", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+}
+
+.editorial-sub {
+  font-family: "SUSE Mono", sans-serif;
+  font-size: 0.8125rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.gold-accent {
+  color: var(--color-gold);
+}
+
+/* Button & CTA Utilities */
+.btn-aydara-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-purple-primary);
+  color: var(--color-white);
+  padding: 14px 34px;
+  font-size: 0.8125rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(36, 17, 47, 0.18);
+  transition: transform var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-aydara-primary:hover {
+  background-color: var(--color-purple-secondary);
+  box-shadow: var(--shadow-elevated);
+  transform: translateY(-2px);
+}
+
+.btn-aydara-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-white);
+  color: var(--color-purple-primary);
+  padding: 14px 34px;
+  font-size: 0.8125rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.16);
+  transition: transform var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-aydara-light:hover {
+  background-color: var(--color-offwhite);
+  color: var(--color-gold-dark);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.24);
+  transform: translateY(-2px);
+}
+
+.btn-link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  transition: gap var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-link-arrow:hover {
+  gap: 14px;
+  color: var(--color-gold);
+}
+
+.btn-link-arrow-light {
+  color: var(--color-white);
+}
+
+.btn-link-arrow-light:hover {
+  color: var(--color-gold-light);
+}
+
+/* Grid & Layout Helpers */
+.aydara-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+@media (max-width: 768px) {
+  .aydara-container {
+    padding: 0 20px;
+  }
+}

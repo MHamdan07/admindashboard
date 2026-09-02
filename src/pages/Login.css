@@ -1,0 +1,348 @@
+/* AYDARA Luxury Glassmorphic Login Styles (Image 4 Ref) */
+.aydara-login-container {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0d0612;
+  position: relative;
+  overflow: hidden;
+  padding: 48px 20px;
+}
+
+/* Light Beam Ray from top-right */
+.login-light-beam {
+  position: absolute;
+  top: -15%;
+  right: -5%;
+  width: 55vw;
+  height: 85vh;
+  background: radial-gradient(
+    ellipse at top right,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(200, 169, 107, 0.08) 35%,
+    rgba(36, 17, 47, 0) 70%
+  );
+  transform: rotate(-18deg);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Glassmorphic Modal Card */
+.login-glass-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 440px;
+  background: rgba(26, 15, 33, 0.72);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border-radius: 28px;
+  padding: 42px 36px;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.65),
+    0 0 1px rgba(255, 255, 255, 0.35) inset,
+    0 1px 0 rgba(255, 255, 255, 0.25) inset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Logo icon at top */
+.login-icon-wrap {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-brand-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(200, 169, 107, 0.4));
+}
+
+/* Card Header */
+.login-card-head {
+  margin-bottom: 28px;
+}
+
+.login-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 400;
+  color: #FFFFFF;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.login-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: #A99FAD;
+  font-weight: 400;
+}
+
+/* Error badge */
+.login-error-badge {
+  width: 100%;
+  background: rgba(220, 38, 38, 0.15);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  color: #FCA5A5;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* Form layout */
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.login-input-group {
+  position: relative;
+  width: 100%;
+}
+
+.login-input-field {
+  width: 100%;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0 18px;
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  outline: none;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-input-field::placeholder {
+  color: #7A727E;
+}
+
+.login-input-field:focus {
+  background: rgba(255, 255, 255, 0.11);
+  border-color: rgba(200, 169, 107, 0.6);
+  box-shadow: 0 0 0 3px rgba(200, 169, 107, 0.15);
+}
+
+.password-group {
+  position: relative;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #7A727E;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.password-toggle-btn:hover {
+  color: #FFFFFF;
+}
+
+/* Forgot password */
+.login-forgot-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -4px;
+}
+
+.login-forgot-btn {
+  background: transparent;
+  border: none;
+  color: #A99FAD;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 0;
+}
+
+.login-forgot-btn:hover {
+  color: var(--color-gold);
+  text-decoration: underline;
+}
+
+/* Primary Pill Button */
+.login-submit-pill-btn {
+  width: 100%;
+  height: 48px;
+  border-radius: 24px;
+  background: #FFFFFF;
+  color: #160B1C;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-submit-pill-btn:hover:not(:disabled) {
+  background: #F3EEF5;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+}
+
+.login-submit-pill-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* OR Divider */
+.login-or-divider {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  gap: 12px;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.divider-text {
+  font-size: 0.72rem;
+  color: #7A727E;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+/* Social Pill Button */
+.login-social-pill-btn {
+  width: 100%;
+  height: 48px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.login-social-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Quick Demo Access */
+.login-quick-demo-row {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  background: rgba(200, 169, 107, 0.06);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.demo-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-gold);
+  font-weight: 600;
+}
+
+.demo-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.demo-chip-btn {
+  flex: 1;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(200, 169, 107, 0.2);
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.demo-chip-btn:hover {
+  background: rgba(200, 169, 107, 0.2);
+}
+
+/* Bottom Toggle */
+.login-bottom-toggle {
+  margin-top: 24px;
+}
+
+.login-bottom-toggle p {
+  font-size: 0.825rem;
+  color: #A99FAD;
+  margin: 0;
+}
+
+.toggle-auth-btn {
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.toggle-auth-btn:hover {
+  color: var(--color-gold);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+  .aydara-login-container {
+    padding: 24px 16px;
+  }
+
+  .login-glass-card {
+    padding: 32px 20px;
+    border-radius: 22px;
+  }
+
+  .login-title {
+    font-size: 1.7rem;
+  }
+
+  .login-light-beam {
+    width: 80vw;
+    height: 60vh;
+  }
+}

@@ -1,0 +1,44 @@
+/* AYDARA Global Luxury CSS Reset & Utilities */
+:root, body, html {
+  font-family: "SUSE Mono", sans-serif !important;
+}
+
+*, *::before, *::after, button, input, textarea, select {
+  font-family: "SUSE Mono", sans-serif !important;
+}
+
+.aydara-app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--color-white);
+  font-family: "SUSE Mono", sans-serif !important;
+}
+
+.aydara-page-outlet {
+  flex: 1;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-offwhite);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-purple-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* Smooth selection */
+::selection {
+  background-color: var(--color-purple-primary);
+  color: var(--color-gold);
+}
