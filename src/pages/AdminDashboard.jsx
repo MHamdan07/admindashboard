@@ -150,7 +150,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!isAdmin || role === 'CUSTOMER' || !user) {
-      navigate('/admin/login', { replace: true });
+      navigate('/login', { replace: true });
       return;
     }
 
@@ -875,7 +875,7 @@ export default function AdminDashboard() {
               <p className="admin-user-role">{isSuperAdmin ? 'Super Administrator' : isStaff ? 'Maison Staff' : 'Administrator'}</p>
             </div>
           </div>
-          <button type="button" className="admin-logout-btn" onClick={() => { logout(); navigate('/admin/login', { replace: true }); }} title="Logout">
+          <button type="button" className="admin-logout-btn" onClick={() => { logout(); navigate('/login', { replace: true }); }} title="Logout">
             <LogOut size={16} />
           </button>
         </div>

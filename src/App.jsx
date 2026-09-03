@@ -18,11 +18,11 @@ export default function App() {
         <CurrencyProvider>
           <CMSProvider>
             <Routes>
-              {/* Admin Portal Routes */}
+              {/* Main Admin & CMS Routes */}
               <Route path="/" element={<AdminDashboard />} />
               <Route path="/login" element={<AdminLogin />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/login" element={<Navigate to="/login" replace />} />
+              <Route path="/admin" element={<Navigate to="/" replace />} />
               <Route path="/dashboard" element={<AdminDashboard />} />
               <Route path="/products" element={<AdminDashboard />} />
               <Route path="/orders" element={<AdminDashboard />} />

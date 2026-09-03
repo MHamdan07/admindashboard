@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldCheck, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Eye, EyeOff, Lock, AlertCircle, Loader2 } from 'lucide-react';
 import './Login.css';
 
 export default function AdminLogin() {
@@ -16,7 +16,7 @@ export default function AdminLogin() {
 
   useEffect(() => {
     if (user && isAdmin) {
-      navigate('/admin', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [user, isAdmin, navigate]);
 
@@ -33,41 +33,50 @@ export default function AdminLogin() {
     try {
       const res = await adminLogin(email, password);
       if (res.success && res.user) {
-        navigate('/admin', { replace: true });
+        navigate('/', { replace: true });
       } else {
         setError(res.message || 'Invalid administrative credentials or insufficient privileges.');
       }
     } catch {
-      setError('Administrative server connection failed.');
+      setError('Administrative server connection failed. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="aydara-login-container" style={{ background: '#0a030e' }}>
-      <div className="login-light-beam" style={{ background: 'radial-gradient(ellipse at top right, rgba(200, 169, 107, 0.2) 0%, rgba(36, 17, 47, 0) 70%)' }}></div>
+    <div className="aydara-login-container">
+      <div className="login-light-beam"></div>
+      <div className="login-light-beam-secondary"></div>
 
-      <div className="login-glass-card" style={{ maxWidth: '460px', border: '1px solid rgba(200, 169, 107, 0.25)' }}>
-        <div className="login-icon-wrap" style={{ width: '52px', height: '52px' }}>
-          <img src="/brand/aydara-logo-gold.svg" alt="AYDARA Maison" className="login-brand-icon" />
+      <div className="login-glass-card">
+        <div className="login-icon-wrap">
+          <img
+            src="/brand/aydara-logo-gold.svg"
+            alt="AYDARA Maison"
+            className="login-brand-icon"
+            onError={(e) => {
+              e.currentTarget.src = '/aydara-logo-gold.svg';
+            }}
+          />
         </div>
 
         <div className="login-card-head">
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(200, 169, 107, 0.15)', padding: '4px 10px', borderRadius: '4px', marginBottom: '12px' }}>
-            <ShieldCheck size={14} className="gold-accent" />
-            <span style={{ fontSize: '0.68rem', fontWeight: '700', letterSpacing: '0.12em', color: 'var(--color-gold)' }}>
+          <div className="login-access-badge">
+            <ShieldCheck size={14} color="#C8A96B" />
+            <span className="login-access-text">
               MAISON CMS • RESTRICTED ACCESS
             </span>
           </div>
-          <h1 className="login-title" style={{ fontSize: '1.75rem' }}>ADMINISTRATIVE ACCESS</h1>
+          <h1 className="login-title">ADMINISTRATIVE ACCESS</h1>
           <p className="login-subtitle">
             Secure administrative portal. Authorized personnel only.
           </p>
         </div>
 
         {error && (
-          <div className="login-error-badge" style={{ background: 'rgba(220, 38, 38, 0.2)', border: '1px solid rgba(220, 38, 38, 0.4)' }}>
+          <div className="login-error-badge">
+            <AlertCircle size={16} />
             <span>{error}</span>
           </div>
         )}
@@ -99,6 +108,7 @@ export default function AdminLogin() {
               type="button"
               className="password-toggle-btn"
               onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
               tabIndex="-1"
             >
               {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -108,18 +118,24 @@ export default function AdminLogin() {
           <button
             type="submit"
             className="login-submit-pill-btn"
-            style={{ background: 'var(--color-gold)', color: '#160B1C', fontWeight: '700' }}
             disabled={isSubmitting || loading}
           >
-            {isSubmitting || loading ? 'VERIFYING CREDENTIALS...' : 'SIGN IN TO CMS'}
+            {isSubmitting || loading ? (
+              <>
+                <Loader2 size={16} className="animate-spin" />
+                <span>VERIFYING CREDENTIALS...</span>
+              </>
+            ) : (
+              <span>SIGN IN TO CMS</span>
+            )}
           </button>
         </form>
 
-        <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.08)', width: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-          <Link to="/" style={{ color: '#A99FAD', fontSize: '0.75rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <span>Storefront</span>
-            <ArrowRight size={12} />
-          </Link>
+        <div className="login-card-footer">
+          <div className="login-footer-security-note">
+            <Lock size={12} color="#C8A96B" />
+            <span>256-bit TLS Encrypted Session • Maison CMS</span>
+          </div>
         </div>
       </div>
     </div>
