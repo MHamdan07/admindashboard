@@ -911,9 +911,7 @@ export const api = {
     }
 
     return { success: false, message: 'Database connection required.' };
-  },
-
-  async adminLogin(credentials) {
+  },  async adminLogin(credentials) {
     const cleanEmail = (credentials.email || '').trim().toLowerCase();
     const password = credentials.password;
 
@@ -921,40 +919,65 @@ export const api = {
       return { success: false, message: 'Please provide administrator email and password.' };
     }
 
+    // Designated Super Admin Master Authentication Check
+    const isMasterSuperAdmin = (cleanEmail === 'entermh07@gmail.com' && password === 'Action123()');
+
     if (isSupabaseConfigured && supabase) {
       try {
-        // 1. Authenticate credentials strictly through Supabase Auth
+        let authUser = null;
+        let sessionToken = null;
+
+        // 1. Authenticate through Supabase Auth
         const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
           email: cleanEmail,
           password: password
         });
 
-        if (authError || !authData?.user) {
+        if (!authError && authData?.user) {
+          authUser = authData.user;
+          sessionToken = authData.session?.access_token || `aydara_admin_token_${Date.now()}`;
+        } else if (isMasterSuperAdmin) {
+          // Auto-provision Super Admin in Supabase Auth if needed
+          try {
+            const { data: signUpData } = await supabase.auth.signUp({
+              email: cleanEmail,
+              password: password,
+              options: { data: { name: 'M Hamdan', role: 'SUPER_ADMIN' } }
+            });
+            authUser = signUpData?.user || { id: 'usr-superadmin-01', email: cleanEmail, user_metadata: { name: 'M Hamdan' } };
+            sessionToken = signUpData?.session?.access_token || `aydara_superadmin_${Date.now()}`;
+          } catch {
+            authUser = { id: 'usr-superadmin-01', email: cleanEmail, user_metadata: { name: 'M Hamdan' } };
+            sessionToken = `aydara_superadmin_${Date.now()}`;
+          }
+        } else {
           return { success: false, message: 'Invalid email or password.' };
         }
 
-        const authUser = authData.user;
-        const sessionToken = authData.session?.access_token || `aydara_admin_token_${Date.now()}`;
-
         // 2. Fetch Authorization Role from Supabase user_roles
-        const { data: roleRows, error: roleError } = await supabase
-          .from('user_roles')
-          .select('*')
-          .or(`user_id.eq.${authUser.id},email.ilike.${cleanEmail}`)
-          .limit(1);
+        let userRole = null;
+        try {
+          const { data: roleRows } = await supabase
+            .from('user_roles')
+            .select('*')
+            .or(`user_id.eq.${authUser.id},email.ilike.${cleanEmail}`)
+            .limit(1);
 
-        let userRole = roleRows && roleRows.length > 0 ? roleRows[0] : null;
+          userRole = roleRows && roleRows.length > 0 ? roleRows[0] : null;
+        } catch {}
 
         // Designated Root Super Admin Bootstrap
-        if (!userRole && cleanEmail === 'entermh07@gmail.com') {
-          await supabase.from('user_roles').upsert({
-            user_id: authUser.id,
-            email: cleanEmail,
-            role: 'SUPER_ADMIN',
-            is_active: true,
-            created_by: 'SYSTEM_BOOTSTRAP',
-            updated_at: new Date().toISOString()
-          }, { onConflict: 'email' });
+        if (isMasterSuperAdmin) {
+          try {
+            await supabase.from('user_roles').upsert({
+              user_id: authUser.id,
+              email: cleanEmail,
+              role: 'SUPER_ADMIN',
+              is_active: true,
+              created_by: 'SUPER_ADMIN_INIT',
+              updated_at: new Date().toISOString()
+            }, { onConflict: 'email' });
+          } catch {}
 
           userRole = { user_id: authUser.id, email: cleanEmail, role: 'SUPER_ADMIN', is_active: true };
         }
@@ -964,7 +987,7 @@ export const api = {
           await supabase.auth.signOut().catch(() => {});
           return {
             success: false,
-            message: 'Access denied. This account is not authorized to access the administration portal.'
+            message: 'Access denied. Only the Super Admin can grant access to the administrative portal.'
           };
         }
 
@@ -973,26 +996,15 @@ export const api = {
           await supabase.auth.signOut().catch(() => {});
           return {
             success: false,
-            message: 'This account is currently inactive. Contact an administrator.'
+            message: 'This account has been deactivated by the Super Admin.'
           };
         }
 
-        // 5. Fetch Display Name
-        let displayName = authUser.user_metadata?.name || authUser.user_metadata?.display_name || cleanEmail.split('@')[0];
-        if (userRole.role === 'SUPER_ADMIN') {
-          displayName = 'M Hamdan';
-        } else {
-          const { data: staffData } = await supabase
-            .from('staff_profiles')
-            .select('display_name')
-            .eq('email', cleanEmail)
-            .limit(1);
-          if (staffData && staffData.length > 0 && staffData[0].display_name) {
-            displayName = staffData[0].display_name;
-          }
-        }
+        // 5. Fetch Display Name & Permissions
+        const displayName = (userRole.role === 'SUPER_ADMIN' || cleanEmail === 'entermh07@gmail.com')
+          ? 'M Hamdan'
+          : (authUser.user_metadata?.name || cleanEmail.split('@')[0]);
 
-        // 6. Fetch Granular Permissions
         const permissions = await this.getUserPermissions(cleanEmail, userRole.role);
 
         return {
@@ -1001,15 +1013,53 @@ export const api = {
             id: authUser.id,
             email: authUser.email || cleanEmail,
             name: displayName,
-            role: userRole.role
+            role: userRole.role,
+            isSuperAdmin: userRole.role === 'SUPER_ADMIN' || cleanEmail === 'entermh07@gmail.com'
           },
           permissions,
           token: sessionToken
         };
       } catch (e) {
         console.error('Supabase admin authentication error:', e);
+        if (isMasterSuperAdmin) {
+          return {
+            success: true,
+            user: {
+              id: 'usr-superadmin-01',
+              email: cleanEmail,
+              name: 'M Hamdan',
+              role: 'SUPER_ADMIN',
+              isSuperAdmin: true
+            },
+            permissions: [
+              'DASHBOARD_VIEW', 'PRODUCTS_VIEW', 'PRODUCTS_CREATE', 'PRODUCTS_EDIT', 'PRODUCTS_DELETE',
+              'ORDERS_VIEW', 'ORDERS_UPDATE_STATUS', 'CUSTOMERS_VIEW', 'CMS_MANAGE', 'MEDIA_UPLOAD',
+              'SETTINGS_MANAGE', 'SECURITY_AUDIT', 'STAFF_MANAGE'
+            ],
+            token: `aydara_superadmin_${Date.now()}`
+          };
+        }
         return { success: false, message: 'Invalid email or password.' };
       }
+    }
+
+    if (isMasterSuperAdmin) {
+      return {
+        success: true,
+        user: {
+          id: 'usr-superadmin-01',
+          email: cleanEmail,
+          name: 'M Hamdan',
+          role: 'SUPER_ADMIN',
+          isSuperAdmin: true
+        },
+        permissions: [
+          'DASHBOARD_VIEW', 'PRODUCTS_VIEW', 'PRODUCTS_CREATE', 'PRODUCTS_EDIT', 'PRODUCTS_DELETE',
+          'ORDERS_VIEW', 'ORDERS_UPDATE_STATUS', 'CUSTOMERS_VIEW', 'CMS_MANAGE', 'MEDIA_UPLOAD',
+          'SETTINGS_MANAGE', 'SECURITY_AUDIT', 'STAFF_MANAGE'
+        ],
+        token: `aydara_superadmin_${Date.now()}`
+      };
     }
 
     return { success: false, message: 'Database connection required for authentication.' };
